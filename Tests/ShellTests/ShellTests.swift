@@ -43,6 +43,10 @@ final class ShellTests: XCTestCase {
             XCTFail("This command should throw a `ShellError.generic(Int, String)` error.")
         }
         catch let error as ShellError {
+            self.assert(type: "output",
+                        result: error.localizedDescription,
+                        expected: "/bin/sh: line 0: cd: /invalid-directory: No such file or directory (code: 1)")
+
             switch error {
             case .generic(let code, _):
                 XCTAssertNotEqual(code, 0, "Exit code should not be zero.")

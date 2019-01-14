@@ -15,6 +15,15 @@ public enum ShellError: Error {
     case outputData
     // generic shell error, the first parameter is the error code, the second is the error message
     case generic(Int, String)
+    
+    public var localizedDescription: String {
+        switch self {
+        case .outputData:
+            return "Invalid or empty shell output."
+        case .generic(let code, let message):
+            return message + " (code: \(code))"
+        }
+    }
 }
 
 #if os(macOS)
@@ -71,7 +80,7 @@ open class Shell {
     
     // custom env variables exposed for the shell
     public var env: [String: String]
-    
+
     #if os(macOS)
     // output data handler
     public var outputHandler: ShellDataHandler?
@@ -109,7 +118,6 @@ open class Shell {
      */
     @discardableResult
     public func run(_ command: String) throws -> String {
-
         let process = Process()
         process.launchPath = self.type
         process.arguments = ["-c", command]
