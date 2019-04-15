@@ -119,7 +119,11 @@ open class Shell {
     @discardableResult
     public func run(_ command: String) throws -> String {
         let process = Process()
+        #if swift (>=5.0)
+        process.executableURL = URL(fileURLWithPath: self.type)
+        #elseif swift (>=4.2)
         process.launchPath = self.type
+        #endif
         process.arguments = ["-c", command]
         
         if !self.env.isEmpty {
@@ -153,9 +157,12 @@ open class Shell {
             }
         }
         #endif
-        
+        #if swift (>=5.0)
+        try process.run()
+        #elseif swift (>=4.2)
         process.launch()
-        
+        #endif
+
         #if os(Linux)
         self.lockQueue.sync {
             outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
