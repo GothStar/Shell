@@ -40,7 +40,7 @@ You can even set custom ouptut & error handlers.
 Just use the [Swift Package Manager](https://theswiftdev.com/2017/11/09/swift-package-manager-tutorial/) as usual:
 
 ```swift
-.package(url: "https://github.com/binarybirds/shell", from: "1.1.0"),
+.package(url: "https://github.com/GothStar/shell", from: "1.1.0"),
 ```
 
 ⚠️ Don't forget to add "Shell" to your target as a dependency!
